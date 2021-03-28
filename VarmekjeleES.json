@@ -1,0 +1,456 @@
+{
+  "Id": "CqSGfYP37vWf6gN",
+  "ClassId": "CqSGfYP37vWf6gN",
+  "Author": "KometFoasAS",
+  "Version": 0,
+  "CreatedAt": "2020-09-09T13:15:56.593346945+02:00",
+  "UpdatedAt": "2020-09-09T14:00:24.888977938+02:00",
+  "Name": "VarmekjeleES",
+  "Group": "Effektstyring",
+  "Description": "Varmekjeler effektstyring. MÅ IKKE DEAKTIVERES ELLER ENDRES PÅ!",
+  "Nodes": [
+    {
+      "Id": "90",
+      "Type": "trigger",
+      "Label": "Pulse under 19kW",
+      "SuccessTransition": "91",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:evt/rt:dev/rn:tibber/ad:1/sv:meter_elec/ad:8f16d11a-cccb-42a0-b711-9ab34986b88a",
+      "Service": "meter_elec",
+      "ServiceInterface": "evt.meter.report",
+      "Config": {
+        "InputVariableType": null,
+        "IsValueFilterEnabled": false,
+        "LookupServiceNameAndLocation": false,
+        "PropFilterName": "unit",
+        "PropFilterValue": "W",
+        "RegisterAsVirtualService": false,
+        "Timeout": 0,
+        "ValueFilter": {
+          "Value": "",
+          "ValueType": ""
+        },
+        "ValueJPath": null,
+        "ValueJPathResultType": null,
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "133",
+          "nodeName": "wattage",
+          "nodeType": "wattage"
+        },
+        "x": 66,
+        "y": 186
+      }
+    },
+    {
+      "Id": "91",
+      "Type": "if",
+      "Label": "under 24kW",
+      "SuccessTransition": "92",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "",
+      "Service": "tpflow",
+      "ServiceInterface": "",
+      "Config": {
+        "Expression": [
+          {
+            "BooleanOperator": "",
+            "LeftVariableIsGlobal": false,
+            "LeftVariableName": "",
+            "Operand": "lt",
+            "RightVariable": {
+              "Value": 23999,
+              "ValueType": "float"
+            }
+          }
+        ],
+        "FalseTransition": "",
+        "TrueTransition": "92"
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": null,
+          "nodeName": "If",
+          "nodeType": "wattage"
+        },
+        "x": 56,
+        "y": 346
+      }
+    },
+    {
+      "Id": "92",
+      "Type": "action",
+      "Label": "varmekjele høyre ch_0 slås på",
+      "SuccessTransition": "",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:cmd/rt:dev/rn:zw/ad:1/sv:out_bin_switch/ad:36_0",
+      "Service": "out_bin_switch",
+      "ServiceInterface": "cmd.binary.set",
+      "Config": {
+        "DefaultValue": {
+          "Value": true,
+          "ValueType": "bool"
+        },
+        "IsVariableGlobal": false,
+        "LookupServiceNameAndLocation": false,
+        "Props": {},
+        "RegisterAsVirtualService": false,
+        "ResponseToTopic": null,
+        "VariableName": "",
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "110",
+          "nodeName": "device",
+          "nodeType": "deviceAction"
+        },
+        "x": 69,
+        "y": 502
+      }
+    },
+    {
+      "Id": "7",
+      "Type": "trigger",
+      "Label": "Pulse over 19kW",
+      "SuccessTransition": "8",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:evt/rt:dev/rn:tibber/ad:1/sv:meter_elec/ad:8f16d11a-cccb-42a0-b711-9ab34986b88a",
+      "Service": "meter_elec",
+      "ServiceInterface": "evt.meter.report",
+      "Config": {
+        "InputVariableType": null,
+        "IsValueFilterEnabled": false,
+        "LookupServiceNameAndLocation": false,
+        "PropFilterName": "unit",
+        "PropFilterValue": "W",
+        "RegisterAsVirtualService": false,
+        "Timeout": 0,
+        "ValueFilter": {
+          "Value": "",
+          "ValueType": ""
+        },
+        "ValueJPath": null,
+        "ValueJPathResultType": null,
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "133",
+          "nodeName": "wattage",
+          "nodeType": "wattage"
+        },
+        "x": 360,
+        "y": 178
+      }
+    },
+    {
+      "Id": "8",
+      "Type": "if",
+      "Label": "over 24kW",
+      "SuccessTransition": "9",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "",
+      "Service": "tpflow",
+      "ServiceInterface": "",
+      "Config": {
+        "Expression": [
+          {
+            "BooleanOperator": "",
+            "LeftVariableIsGlobal": false,
+            "LeftVariableName": "",
+            "Operand": "gt",
+            "RightVariable": {
+              "Value": 24000,
+              "ValueType": "float"
+            }
+          }
+        ],
+        "FalseTransition": "",
+        "TrueTransition": "9"
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": null,
+          "nodeName": "If",
+          "nodeType": "wattage"
+        },
+        "x": 369,
+        "y": 351
+      }
+    },
+    {
+      "Id": "9",
+      "Type": "action",
+      "Label": "varmekjele høyre ch_0 slås av",
+      "SuccessTransition": "",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:cmd/rt:dev/rn:zw/ad:1/sv:out_bin_switch/ad:36_0",
+      "Service": "out_bin_switch",
+      "ServiceInterface": "cmd.binary.set",
+      "Config": {
+        "DefaultValue": {
+          "Value": false,
+          "ValueType": "bool"
+        },
+        "IsVariableGlobal": false,
+        "LookupServiceNameAndLocation": false,
+        "Props": {},
+        "RegisterAsVirtualService": false,
+        "ResponseToTopic": null,
+        "VariableName": "",
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "110",
+          "nodeName": "device",
+          "nodeType": "deviceAction"
+        },
+        "x": 376,
+        "y": 513
+      }
+    },
+    {
+      "Id": "27",
+      "Type": "trigger",
+      "Label": "when the wattage value of Tibber real time meter is higher than 18999W",
+      "SuccessTransition": "28",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:evt/rt:dev/rn:tibber/ad:1/sv:meter_elec/ad:8f16d11a-cccb-42a0-b711-9ab34986b88a",
+      "Service": "meter_elec",
+      "ServiceInterface": "evt.meter.report",
+      "Config": {
+        "InputVariableType": null,
+        "IsValueFilterEnabled": false,
+        "LookupServiceNameAndLocation": false,
+        "PropFilterName": "unit",
+        "PropFilterValue": "W",
+        "RegisterAsVirtualService": false,
+        "Timeout": null,
+        "ValueFilter": {
+          "Value": null,
+          "ValueType": null
+        },
+        "ValueJPath": null,
+        "ValueJPathResultType": null,
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "133",
+          "nodeName": "wattage",
+          "nodeType": "wattage"
+        },
+        "x": 675,
+        "y": 185
+      }
+    },
+    {
+      "Id": "28",
+      "Type": "if",
+      "Label": "under 25kW",
+      "SuccessTransition": "29",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "",
+      "Service": "tpflow",
+      "ServiceInterface": "",
+      "Config": {
+        "Expression": [
+          {
+            "BooleanOperator": "",
+            "LeftVariableIsGlobal": false,
+            "LeftVariableName": "",
+            "Operand": "lt",
+            "RightVariable": {
+              "Value": 24999,
+              "ValueType": "float"
+            }
+          }
+        ],
+        "FalseTransition": "",
+        "TrueTransition": "29"
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": null,
+          "nodeName": "If",
+          "nodeType": "wattage"
+        },
+        "x": 676,
+        "y": 351
+      }
+    },
+    {
+      "Id": "29",
+      "Type": "action",
+      "Label": "varmekjele venstre ch_0 slås på",
+      "SuccessTransition": "",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:cmd/rt:dev/rn:zw/ad:1/sv:out_bin_switch/ad:35_0",
+      "Service": "out_bin_switch",
+      "ServiceInterface": "cmd.binary.set",
+      "Config": {
+        "DefaultValue": {
+          "Value": true,
+          "ValueType": "bool"
+        },
+        "IsVariableGlobal": false,
+        "LookupServiceNameAndLocation": false,
+        "Props": {},
+        "RegisterAsVirtualService": false,
+        "ResponseToTopic": null,
+        "VariableName": "",
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "107",
+          "nodeName": "device",
+          "nodeType": "deviceAction"
+        },
+        "x": 682,
+        "y": 527
+      }
+    },
+    {
+      "Id": "15",
+      "Type": "trigger",
+      "Label": "when the wattage value of Tibber real time meter is higher than 19000W",
+      "SuccessTransition": "16",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:evt/rt:dev/rn:tibber/ad:1/sv:meter_elec/ad:8f16d11a-cccb-42a0-b711-9ab34986b88a",
+      "Service": "meter_elec",
+      "ServiceInterface": "evt.meter.report",
+      "Config": {
+        "InputVariableType": null,
+        "IsValueFilterEnabled": false,
+        "LookupServiceNameAndLocation": false,
+        "PropFilterName": "unit",
+        "PropFilterValue": "W",
+        "RegisterAsVirtualService": false,
+        "Timeout": null,
+        "ValueFilter": {
+          "Value": null,
+          "ValueType": null
+        },
+        "ValueJPath": null,
+        "ValueJPathResultType": null,
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "133",
+          "nodeName": "wattage",
+          "nodeType": "wattage"
+        },
+        "x": 962,
+        "y": 179
+      }
+    },
+    {
+      "Id": "16",
+      "Type": "if",
+      "Label": "over 25kW",
+      "SuccessTransition": "17",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "",
+      "Service": "tpflow",
+      "ServiceInterface": "",
+      "Config": {
+        "Expression": [
+          {
+            "BooleanOperator": "",
+            "LeftVariableIsGlobal": false,
+            "LeftVariableName": "",
+            "Operand": "gt",
+            "RightVariable": {
+              "Value": 25000,
+              "ValueType": "float"
+            }
+          }
+        ],
+        "FalseTransition": "",
+        "TrueTransition": "17"
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": null,
+          "nodeName": "If",
+          "nodeType": "wattage"
+        },
+        "x": 964,
+        "y": 360
+      }
+    },
+    {
+      "Id": "17",
+      "Type": "action",
+      "Label": "varmekjele venstre ch_0 slås av",
+      "SuccessTransition": "",
+      "TimeoutTransition": "",
+      "ErrorTransition": "",
+      "Address": "pt:j1/mt:cmd/rt:dev/rn:zw/ad:1/sv:out_bin_switch/ad:35_0",
+      "Service": "out_bin_switch",
+      "ServiceInterface": "cmd.binary.set",
+      "Config": {
+        "DefaultValue": {
+          "Value": false,
+          "ValueType": "bool"
+        },
+        "IsVariableGlobal": false,
+        "LookupServiceNameAndLocation": false,
+        "Props": {},
+        "RegisterAsVirtualService": false,
+        "ResponseToTopic": null,
+        "VariableName": "",
+        "VirtualServiceGroup": "ch_0",
+        "VirtualServiceProps": {}
+      },
+      "Ui": {
+        "nodeType": "",
+        "papp": {
+          "nodeId": "107",
+          "nodeName": "device",
+          "nodeType": "deviceAction"
+        },
+        "x": 958,
+        "y": 523
+      }
+    }
+  ],
+  "IsDisabled": false,
+  "IsDefault": false,
+  "ParallelExecution": "parallel"
+}
